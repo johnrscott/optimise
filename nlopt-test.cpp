@@ -28,27 +28,25 @@ double obj(const std::vector<double> & x, std::vector<double> & grad, void * f_d
   // Feel free to print stuff here to see how this functions get called.
   // Calculate the objective function:
   double value = 0;
-  for(int n=0; n++; n<4)
-    value += (x[n] - y[n])*(x[n] - y[0]);
+  for(int n=0; n<4; n++)
+    value += (x[n] - y[n])*(x[n] - y[n]);
   // Return the value of the function
   return value;
 }
 
 
 int main () {
-  
   // Specify stopping conditions
-  double cons_tol = 1e-6;
-  double ftol = 1e-6;
+  double ftol_rel = 1e-10;
   
   // Specify lower and upper bounds for optimsation variables
-  std::vector<double> lb{-1, -1, -1, -1};
-  std::vector<double> ub{1, 1, 1, 1};    
+  std::vector<double> lb{-10, -10, -10, -10};
+  std::vector<double> ub{10, 10, 10, 10};    
 
   // Set the value of the additional parameters y
-  std::vector<double> y = {0, 0, 0, 0};
+  std::vector<double> y{1, 1, 1, 1};
   
-  // Create an nlop objectT
+  // Create an nlopt object
   // The 4 at the end is the number of optimisation parameters
   // I've put all the types of optimisation as comments.
   // It's set to Nelder-Mead at the moment
@@ -60,12 +58,10 @@ int main () {
   // Set bounds on the parameters
   opt.set_lower_bounds(lb);
   opt.set_upper_bounds(ub);
-  opt.set_ftol_rel(ftol);
-  double ftol_rel = opt.get_ftol_rel();
-  //std::cout << ftol_rel;
+  opt.set_ftol_rel(ftol_rel);
 
   // Pick a starting point for the optimiser
-  std::vector<double> x{1,0,0,0};
+  std::vector<double> x{0,0,0,0};
   
   // Variable to contain the minimum of the function
   double min;
@@ -82,10 +78,23 @@ int main () {
     return 0;
   }
 
-  // Print the results
-  std::cout << "Here is y: " << y << std::endl;
-  
-
-
+  // Print the results. There's probably a right
+  // way to print 
+  std::cout << "Here is y: ["
+	    << y[0] << ", "
+	    << y[1] << ", "
+	    << y[2] << ", "
+	    << y[3] << "] "
+	    << std::endl;
+  std::cout << "The minimum of the objective function is: "
+	    << min
+	    << std::endl;
+  std::cout << "Here is the result of the optimisation: ["
+	    << x[0] << ", "
+	    << x[1] << ", "
+	    << x[2] << ", "
+	    << x[3] << "] "
+	    << std::endl;
+ 
   return 0;
 }
