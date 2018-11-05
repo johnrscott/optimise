@@ -1,0 +1,4 @@
+CFLAGS = -I../..
+
+all:
+	g++ $(CFLAGS) dlib-test.cpp -o test
