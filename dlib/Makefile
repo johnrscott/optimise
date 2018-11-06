@@ -1,5 +1,5 @@
 DLIB_PATH = ../../dlib
-CFLAGS = -I$(DLIB_PATH)
+CFLAGS = -std=c++11 -I$(DLIB_PATH)
 LDFLAGS =  -lpthread -lX11
 
 # I got a weird runtime error -- couldn't find a symbol in libstdc++.so.6
